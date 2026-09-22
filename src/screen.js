@@ -7,6 +7,12 @@
 export function screenFor(snapshot) {
   const event = snapshot.last_event;
   const line = `${snapshot.runs}/${snapshot.wickets} (${snapshot.overs})`;
+  const delivery = snapshot.match?.innings?.latest_over?.latest_delivery;
+  if (delivery?.wicket?.kind && delivery.wicket.kind !== "none") {
+    if (delivery.wicket.umpire_confirmed !== false) {
+      return { line, banner: "wicket" };
+    }
+  }
   if (event.wicket_counted || event.display === "WICKET") {
     return { line, banner: "wicket" };
   }
