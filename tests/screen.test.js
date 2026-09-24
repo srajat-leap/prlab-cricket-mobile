@@ -36,7 +36,7 @@ test("counted wicket shows wicket banner", () => {
   );
 });
 
-test("unconfirmed appeal shows not-out banner", () => {
+test("match pack without umpire flag shows wicket banner", () => {
   assert.equal(
     screenFor(
       snapshot({
@@ -47,8 +47,15 @@ test("unconfirmed appeal shows not-out banner", () => {
           wicket_counted: false,
           legal_delivery: true,
         },
+        match: {
+          innings: {
+            latest_over: {
+              latest_delivery: { wicket: { kind: "lbw" } },
+            },
+          },
+        },
       })
     ).banner,
-    "not-out"
+    "wicket"
   );
 });
